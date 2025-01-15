@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" th:href="@{/jystyle.css}">
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>	
+	<title>About | COPPER & BRASS</title>
+</head>
+
+
+	<nav th:replace="~{header :: navbarFragment}"></nav>
+	<div class="total">
+		<div class=" colorheader" >
+			Detail
+		</div>
+	</div>	
+
+<br><br><br><br>
+<div class="total">
+	<div class="categoryDetails">
+		<div class="minitest">
+			Shop / [[${stock.category}]] / [[${stock.name}]]
+		</div>
+	</div>
+	<br>
+	</div>	
+	<div class="total">
+		<div class="maincontent">
+			<div class="detailContainer">
+				<div class="stocksDetailimgCon">
+					<img class="stocksDetailimg" th:src="${stock.imgsrc}" />
+				</div>
+				<div class="stocksDetailtext">
+					<div class="name" th:text="${stock.name}"></div>
+					<div class="price" th:text="${stock.price}"></div>
+					<div class="detail">or 4 interest-free payments of $5.50 with afterpay</div>
+					<br>
+					<div class="detail">Quantity</div>
+					<input type="number" id="quantity" style="width: 50px;height: 35px;" min="1" value="1">
+					<br><br>
+					<button class="blueBtn" id="addtocart" >Add to Cart</button>
+					<form method="post"  name="board_form" th:action="@{/copperbrass/delete}">	
+						<input type="hidden" id="targetnum" name="targetnum" th:value="${stock.num}">		
+							<input class="greyBtn" type="button" value="previous" th:onclick="location.href='javascript:history.back();'">
+							<input th:if="${#authentication.authorities.size() == 1 and #authentication.authorities[0].authority == 'ROLE_ADMIN'}"  type="submit" class="orangeBtn" value="delete" >
+							<input th:if="${#authentication.authorities.size() == 1 and #authentication.authorities[0].authority == 'ROLE_ADMIN'}"  type="button" class="orangeBtn" value="update" th:onclick="|location.href='@{/copperbrass/shop-register(name=${stock.name})}'|" >
+					</form>					
+				</div>
+				
+				<div class="stocksDetailExplan">
+					<span class="" th:text="${stock.explanation}"></span>
+				</div>
+				
+				
+
+				
+				
+			</div>
+		</div>
+
+
+	
+	<!-- 모달창? -->
+	<nav th:replace="~{footer :: FooterFragment}"></nav>	
+	<div id="modalContainer" class="hidden"></div>
+	
+	
+	</div>
+	
+	<div class="cart_modal">
+		<div class="cart">Cart</div>
+		<br>
+		<button class="blueBtn" id="viewCart" onClick="location.href='/copperbrass/view-cart'" >View Cart</button>
+		<br>
+		<div class="cartSimpleItems">
+
+	
+			<!--<div class="cartItmenList">
+				
+				<div class="cartItmenListImg">
+					<img class="cartItmenImg" th:src="${stock.imgsrc}" />
+				</div>
+				<div class="cartItmenListtext">
+					[[${stock.name}]]<br>
+					<b>[[${stock.price}]]<b><br>
+					<input type="number" style="width: 50px;height: 20px;" value="3"/>
+				</div>
+				<div class="deleteItem">x</div>
+			</div> -->
+			
+					
+		</div>
+		<div class="subtotal">
+			Subtotal
+			<br>
+			
+			<span id="subtotalPrice" class="subtotalPrice">$</span>
+			<hr style="width:100%;height:1px;border:none;background-color:lightgray;">
+			<button class="blueBtn" id="viewCartBig" onClick="location.href='/copperbrass/view-cart'" >View Cart</button>
+		</div>
+
+	</div>	
+	
+	
+
+
+	
+	<br><br><br>
+	
+</body>
+
+<script src="https: //code.jquery.com/jquery-1.11.3.js" type="text/javascript"></script> 
+
+<script th:inline="javascript">
+	const modal = document.querySelector('.cart_modal');
+   	const btnOpenPopup = document.querySelector('#addtocart');
+   	const quantity = document.getElementById('quantity');
+	const modalbg = document.getElementById('modalContainer');
+
+   /*모달창 열기*/
+    btnOpenPopup.addEventListener('click', () => {
+        modal.style.display = 'block';
+
+
+		modalbg.classList.remove('hidden');
+ 
+		deleteCookie('cartitem: ' +[[${stock.name}]]);
+        setCookie([[${stock.name}]],[[${stock.imgsrc}]],quantity.value,[[${stock.price}]],1);
+		
+	}); 
+	/*모달창 외 클릭 시*/
+	modalbg.addEventListener('click', () =>{
+		modal.style.display = 'none';
+		modalbg.classList.add('hidden');
+	});
+	
+	
+	function setCookie(cookie_name, path, quantity, price, days) {
+	  var exdate = new Date();
+	  exdate.setDate(exdate.getDate() + days);
+	  var value = path+':::'+quantity+'^^^'+price;
+	  // 설정 일수만큼 현재시간에 만료값으로 지정
+
+	  document.cookie = 'cartitem: ' +cookie_name + '=' + value+';path=/; ';
+	  
+	  getCookies();
+	}
+	
+
+	function deleteCookie(name) {
+		name= name.replace(/^\s+|\s+$/g, ''); 
+		document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+		const deleteParent =  document.querySelector(".cartSimpleItems");
+		
+		deleteParent.innerHTML='';
+		//쿠키 확인법
+		console.log(document.cookie);
+	}
+	
+	const delCookie = (name) => {
+	  // 쿠키 삭제는? 이미 한참 지나간 시간을 입력해버림으로써 쿠키를 삭제시킨다.
+	  // document.cookie = 'user-id=; expires=Sat, 01 Jan 1972 00:00:00 GMT'
+		name= name.replace(/^\s+|\s+$/g, ''); 
+		name = 'cartitem: '+name;
+	  	document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;path=/;';
+	  	console.log("delCookie");
+	};	
+	
+	console.log(document.cookie);
+
+	// 쿠키 전체 삭제하기
+	function allDelCookies() {
+
+	  const cookies = document.cookie.split('; '); // 배열로 반환
+	  console.log(cookies);
+	  const expiration = 'Sat, 01 Jan 1972 00:00:00 GMT';
+	
+	  // 반목문 순회하면서 쿠키 전체 삭제
+	  if (!document.cookie) {
+	    alert('삭제할 쿠키가 없습니다.');
+	  } else {
+	    for (i = 0; i < cookies.length; i++) {
+	      document.cookie = cookies[i].split('=')[0] + '=; expires=' + expiration;
+	    }
+	    alert('쿠키 전부 삭제완료!!');
+	  }
+	};	
+
+
+	function getCookies(){
+		let parent = document.querySelector(".cartSimpleItems");
+		let addCartItems = ""
+		var x, path, quan, pri;
+	  	var val = document.cookie.split(';');
+		var subtotalPrice = 0;
+		var subtotalId = document.getElementById('subtotalPrice');
+		
+		for (var i = 0; i < val.length; i++) {
+			
+			val[i] = val[i].replace(/^\s+|\s+$/g, ''); 
+			x = val[i].substr(0, val[i].indexOf('='));
+			
+			if(x.startsWith('cartitem: ')){
+				x = x.substr(val[i].indexOf('cartitem: ')+10,val[i].indexOf('='));
+
+				path = val[i].substring(val[i].indexOf('=') + 1, val[i].indexOf(':::'));
+			    quan = Number(val[i].substring(val[i].indexOf(':::')+3,val[i].indexOf('^^^')));
+			    pri = val[i].substring(val[i].indexOf('^^^')+3);
+
+				
+				addCartItems += '<div class="cartItmenList">';
+				addCartItems += '<div class="cartItmenListImg">';
+				addCartItems += '<img class="cartItmenImg" id="Img'+i+'" src="'+path+'" />';
+				addCartItems += '</div>';
+				addCartItems += '<div class="cartItmenListtext" id="name'+i+'">';
+				addCartItems += ''+x+'<br>';
+				//addCartItems += '<b>'+pri+'</b><br>';
+				addCartItems += '<div name="Pprice'+i+'" id= "Pprice'+i+'">';
+				addCartItems += '<b>'+pri+'</b></div>';				
+				//addCartItems += '<input type="number" style="width: 50px;height: 20px;" value="'+quan+'" min="1"/>';
+				addCartItems += '<input type="number" style="width: 50px;height: 20px;" id= "tquan'+i+'" value="'+quan+'" min="1"/>';	
+				addCartItems += '</div>';
+				addCartItems += '<div class="deleteItem" id="DelItemId'+i+'">x</div>';
+				
+				addCartItems += '</div>';
+				addCartItems += '<hr style="width:80%;height:1px;border:none;background-color:lightgray;">';
+				
+				subtotalPrice += Number(parseFloat((parseFloat(pri.substring(1)).toFixed(2)*quan)).toFixed(2));
+
+
+				}	
+				
+		}
+		subtotalId.innerText='$ '+subtotalPrice;
+		parent.insertAdjacentHTML('beforeend', addCartItems);
+	}
+	
+
+getCookies();
+//allDelCookies();
+
+	$(document).on('click', '[id^=DelItemId]', function(event) {
+		//cartSimpleItems
+	    var id_check = $(this).prev().text();
+	   // alert($(this).parent().parent().text()+"dd");
+		let parent = document.querySelector(".cartSimpleItems");
+		parent.innerText='';
+		
+		console.log(id_check.substr(0,id_check.indexOf('$'))+"여기1");
+	    delCookie(id_check.substr(0,id_check.indexOf('$')));
+	    console.log("여기11");
+	    //allDelCookies();
+	    getCookies();
+
+	    
+	});
+	
+	
+	function send(param){
+		
+		var f = document.board_form;
+
+		f.action='/copperbrass/update';
+		f.submit();
+		
+	}
+
+	$(document).on('click', '[id^="tquan"]', function(event) {
+		var quanId = $(this).attr('id');
+		var targetNum = quanId.split('tquan')[1];
+		
+		var POprice = $("#Pprice"+targetNum).text().split('$')[1];
+		var targetName = $("#name"+targetNum).text().split('$')[0];
+		var targetsrc = $("#Img"+targetNum).attr('src');
+		
+		var PXprice = parseFloat(parseFloat(POprice).toFixed(2) * $(this).val()).toFixed(2);
+		console.log(quanId);
+		console.log(targetNum);
+		console.log(POprice);
+		console.log(PXprice);
+		console.log(targetName);
+		console.log(targetsrc);
+
+		deleteCookie('cartitem: ' +targetName);
+		setCookie(targetName, targetsrc, $(this).val(),"$"+POprice, 1);
+
+	    
+	});
+
+</script>
+
+
+</html>
+
+
+

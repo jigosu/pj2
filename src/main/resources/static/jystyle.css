@@ -1,0 +1,1333 @@
+/*font*/
+
+@font-face {
+    font-family: 'SDSamliphopangche_Outline';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: '모던굴림';
+    src: url('./fonts/210모던굴림B.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'NanumSquareRoundB';
+    src: url('./fonts/NanumSquareRoundB.ttf') format('truetype');
+}
+@font-face {
+    font-family: '나눔스퀘어';
+    src: url('./fonts/NANUMSQUARER.TTF') format('truetype');
+}
+@font-face {
+    font-family: '나눔손글씨동화또박';
+    src: url('./fonts/나눔손글씨동화또박.ttf') format('truetype');
+}
+@font-face {
+    font-family: '오방맛길서체';
+    src: url('./fonts/YJ_Obang_TTF.ttf') format('truetype');
+}
+@font-face {
+    font-family: '롯데마트잠실체4';
+    src: url('./fonts/The Jamsil 4 Medium.ttf') format('truetype');
+}
+@font-face {
+    font-family: '롯데마트잠실체3';
+    src: url('./fonts/The Jamsil 3 Regular.ttf') format('truetype');
+}
+
+
+/*html*/
+body, html {
+	font-family: '롯데마트잠실체4';
+	font-size : 24px;
+
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+button:hover{
+	cursor: pointer;
+}
+
+/*header (시작)*/
+.header {
+	width: 100%;
+	display: flex;
+	justify-content: center; /* 컨테이너를 화면 가운데 정렬 */
+	font-family: '나눔스퀘어';
+}
+.header-container {
+  width: 60%; /* 중앙 컨테이너의 폭 */
+  max-width: 1000px; 
+  min-width: 800px; 
+  display: flex;
+  justify-content: space-between; /* 내부 요소들을 양쪽 끝으로 배치 */
+  align-items: center; /* 내부 요소의 세로 중앙 정렬 */
+}
+.header .navs{
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+.header .navs .logo{
+ 	float: left;
+}
+.header .navs .nav{
+	font-size : 15px;
+	margin-right: 10px;
+	position: relative;
+}
+.header a{
+	text-decoration-line: none;
+
+}
+
+.header .navs .nav .yellow{
+	color : #EDC06F
+}
+.header .navs .nav:visited {
+  	color : black;
+  	text-decoration: none;
+}
+:visited {
+  	color : black;
+  	text-decoration: none;
+}
+.header .navs  .nav:hover {
+ 	 color : #EDC06F;
+}
+.header .navs  .nav:hover .submenu {
+ 	 color : black;
+ 	 text-decoration: none;
+}
+ul, ol, li { list-style:none; margin:0; padding:0; }
+   
+ul.myMenu {position: absolute;top: 3.5%;left: 50%;transform: translate(-50%,-50%);z-index: 100000;}
+ul.myMenu > li { display:inline-block;  padding:5px 3px;  text-align:center; position:relative; }
+ul.myMenu > li:hover { background:#fff; }
+ul.myMenu > li ul.submenu { display:none; position:absolute; top:30px; left:0; }
+ul.myMenu > li:hover ul.submenu { display:block; }
+ul.myMenu > li ul.submenu > li { display:inline-block; padding:5px 10px; background-color: white; font-size : 15px;}
+ul.myMenu > li ul.submenu > li:hover { color: EDC06F; }
+
+
+.loginMenu{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* 항상 오른쪽 정렬 */
+  gap: 10px;
+}	
+.loginMenu input[type="button"],
+.loginMenu input[type="text"] {
+  background-color: white; /* 버튼 배경을 하얗게 설정 */
+  border: none; /* 테두리 제거 */
+  padding: 5px 10px; /* 버튼 안의 여백 */
+  font-size: 12px; /* 텍스트 크기 */
+  cursor: pointer; /* 마우스를 올릴 때 포인터 모양 */
+  border-radius:5px;
+  width:70px;
+  height:30px;
+}
+.headeruser{
+	font-family: 'NanumSquareRoundB';
+	font-size : 12px;
+}
+
+
+
+
+
+/*header (끝)*/
+
+
+
+.total{
+	position: relative;
+	justify-content : center;
+	width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+}
+table{
+	font-family: '나눔스퀘어';	
+	margin-left:auto;
+	margin-right:auto;
+	font-size : 18px;
+	font-weight: bold;
+}
+
+
+
+/* 메인화면 배경:뒷 배경 고정 (시작)*/
+.mainbg{/*안씀*/
+	width: 100vw;
+	height: 560px;
+	background-size: cover;
+	background-attachment: fixed;
+	position: relative;
+}
+
+.total .mainbg1 {
+    background: url("../img/mainPhoto.jpg") no-repeat;
+    background-size: cover;  /*전체화면으로 덮기*/
+    width: 100%;
+    height: 460px;
+	background-attachment: fixed;  /*배경화면에 고정*/
+	position: relative;
+	z-index: 1;  /*화면 겹치게 1순위*/
+}
+
+.total .mainbg1 .mainwhite{
+	font-family: '롯데마트잠실체4';
+	color: white;
+	font-size : 36px;
+	position: absolute; 
+	left: 10%;
+	top: 50%; /* 안쪽 div의 position을 absolute로 설정하고,top 속성을 50%로 설정*/
+	transform: translate(0, -50%)  /*translate의 첫번째 값은 가로이동 거리, 두번째 값은 세로 이동거리*/
+
+}
+.total .mainbg1 .mainwhite .blackbutton{
+	color : white;
+	font-size : 18px;
+	background-color: black;
+	border-radius: 5px;
+	width: 150px;
+	height: 40px;
+}
+/* 메인화면 배경:뒷 배경 고정 시작 (끝)*/
+
+
+/* 메인화면 아이콘 (시작)*/
+.total .maincontent{
+	position: relative;
+	background-color: white;
+	margin:0 auto; /* div div 안에 가운데 정렬 자동으로 해줌*/
+	display: flex;
+	justify-content: center; /* 자식 요소를 가로(수평) 기준으로 가운데 정렬시킴 */
+}
+@media screen and (min-width: 1200px) {
+.maincontent{
+	width: 1200px;
+	margin:0 auto; /* div div 안에 가운데 정렬 자동으로 해줌*/
+	display: flex;
+}
+}
+
+
+.total .maincontent table .mainicon{
+	width:40px;
+	height:40px;
+	align-items: center;
+	display:block; margin:auto;
+	
+}
+.total .maincontent table .details{
+	font-family: '나눔스퀘어';	
+	margin-left:auto;
+	margin-right:auto;
+	font-size : 11px;
+	font-weight: bold;
+	
+}
+
+/* 메인화면 아이콘 (끝)*/
+
+
+
+
+/* 메인화면 이미지3개 (시작)*/
+/*400x550 -> 200x275*/
+
+
+.total .maincontent .ytotal{
+	position: relative;
+	height: 400px;
+	width: 300px ;
+	margin:0 auto;
+}
+.total .maincontent .ytotal .yellowbox {
+	display:block; margin:auto;
+	width: 300px !important;
+	height: 400px !important;
+	border-radius: 5%;
+	background-color:lightyellow;
+	position: absolute;
+	top: 0;
+}
+.total .maincontent .ytotal .big{
+	position: absolute;
+}
+
+.total .maincontent .ytotal .big .temp{
+	position: relative;
+	width: 300px ;
+	height: 400px ;
+}
+
+.total .maincontent .ytotal .big .temp .mainbox {
+	display:block; margin:auto;
+	width: 300px !important;
+	height: 400px !important;
+	border-radius: 5%;
+	filter: brightness(0.5);
+	position: absolute;
+}
+
+
+.total .maincontent .ytotal .big .temp .main_image_text {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    color: white;
+    font-size: 20px;
+    font-family: "롯데마트잠실체4";
+    letter-spacing:1px;
+  }
+  
+ .total .maincontent .ytotal .big .temp .mainbox_shop_btn{
+	height:45px;
+	width: 180px;
+    font-size: 15px;
+	border-radius: 10px;
+	position: absolute;
+	border: solid 1px white;
+	background-color:transparent;
+	color: white;
+	font-weight: bold;
+    top: 60%;
+    left: 50%;
+    transform: translate( -50%, -50% );	 
+    
+    
+ }
+ 
+  .total .maincontent .ytotal .big .temp .mainbox_shop_btn:hover{
+	background-color: #EDC06F;
+	color: white;
+ } 
+/* 메인화면 이미지3개 (끝)*/
+
+
+/* 메인화면 베스트셀러 (시작)*/
+ .total .maincontent .bestseller th,td{
+	 text-align: center;
+	 padding: 10px;
+ 
+ }
+ 
+ .total .maincontent .bundleimg {
+	display:block; margin:auto;
+	width: 300px !important;
+	height: 430px !important;
+	border-radius: 5%;
+}
+ .total .maincontent .bestcenter{
+
+  display: flex;
+ }
+  
+
+ .total .maincontent .bestseller{
+	 text-align: center;
+	 width: 200px !important;
+	 height: 200px !important;
+	 flex:1;
+	 border: 1px solid lightgrey;
+	 color: gray;
+	 overflow: hidden; /*이미지 크기 넘지않게*/
+	 
+ }
+ .total .maincontent .bestseller .besttext{
+	 text-align: center;
+	 width: 100%;
+	 padding-top:70px;
+
+	 color: black;
+	 
+ } 
+ .total .maincontent .bestseller .bestprice{
+	 text-align: center;
+	 width: 100%;
+	 padding-top:30px;
+
+	 color: black;
+	 
+ }  
+  .total .maincontent .bestsellerbtn{
+
+	 background-color: white;
+	 border: dashed 1px #EDC06F;
+	 border-radius: 10px;
+	 color: #EDC06F;
+	 font-size: 15px;
+	 padding: 18px 45px;
+ } 
+  .total .maincontent .bestsellerbtn .margin{
+
+	 background-color: white;
+	 border: dashed 1px #EDC06F;
+	 border-radius: 10px;
+	 color: #EDC06F;
+	 font-size: 15px;
+	 padding: 18px 45px;
+	 margin-right: 10px;
+ }
+   .bestsellerbtn:hover{
+
+	 background-color: #EDC06F;
+	 color: white;
+
+ }  
+
+ .bestsellerbtn.margin:hover{
+
+	 background-color: #EDC06F;
+	 color: white;
+ } 
+
+.total .maincontent .bestcenter .bsimg{
+	width: 204px;
+	height: 200px;
+}
+.bestcenter:hover .bsimg{
+	transform: scale(1.1);
+	transition: all 0.5s;
+	overflow: hidden; 
+}
+.bestcenter:hover .bestsellertxt{
+	background-color: #EDC06F;
+	overflow: hidden; 
+	
+}
+/* 메인화면 베스트셀러 (끝)*/ 
+
+
+/* 메인화면 뉴스레터 (시작)*/
+ .newsletter{
+	 background-color: #E0F2F1;
+	 height:550px;	 
+	 font-family: "롯데마트잠실체4";
+	 font-weight: bold;
+  display: flex;
+  justify-content: center;
+ }
+ .newsletter .lettertext{
+	 float: left;
+	 width: 60%;
+	 font-size: 40px;
+	 font-weight: bold;
+	 text-align: center;
+	 height: 400px;
+position: relative;
+ }
+ .newsletter .letterimg{
+	float: left;
+	width: 40%;
+	height: 400px;
+	position: relative;
+ } 
+  .newsletter .lettertext .lettertextcenter{
+	position: absolute;
+	width: 100%;
+	top: 50%;
+ }
+  .newsletter .letterimg .letterimgcenter{
+  position: absolute;
+  width: 100%;
+  top: 20%;
+ }
+ .newslettersend{
+	 width: 80%;
+	 height: 80px;
+	 background-color:white;
+	 bottom: 0;
+	 position : absolute;
+	 border: 1px solid darkgray;
+	 text-align: center;
+	 display:table;  /*테이블 중앙정렬(세로)하기 위해서 */
+
+ }
+ .newslettersend table{
+	height:40px;
+	align-items: center;
+	display:table-cell; /*테이블 중앙정렬(세로)하기 위해서 */
+ 	vertical-align:middle; /*테이블 중앙정렬(세로)하기 위해서 */
+ }
+ .subscribebutton{
+	 width: 100px; 
+	 height: 40px;
+	 background-color: #EDC06F;
+	 border-radius: 5px;
+	 border: none;
+ }
+ 
+ .newsletter .newslettersend .text{
+	height: 500px;
+	background-color: aliceblue;
+}
+
+ /* 메인화면 뉴스레터 (끝)*/
+ 
+ 
+ /* footer (시작)*/
+ .footer{
+	 background-color: snow;
+	 font-family: "나눔스퀘어";
+	 font-size: 16px;
+	 line-height:200%;
+	 color: dimgray;
+	 height: 300px;
+	 /*position: relative;*/
+	 display: flex;
+	 justify-content: center; /* 컨테이너를 화면 가운데 정렬 */
+
+	 bottom:0;
+ }
+.footer-container {
+  width: 100%; /* 중앙 컨테이너의 폭 */
+  max-width: 1000px; 
+  min-width: 800px; 
+  display: flex;
+} 
+ .footer2{
+	 background-color: snow;
+	 font-family: "나눔스퀘어";
+	 font-size: 16px;
+	 color: black;
+	 height: 80px;
+	 color: dimgray;
+	 position: relative;
+
+ } 
+  /* footer (끝)*/
+  
+/* About 페이지*/
+.total .colorheader{
+ 	background-color: #EDC06F;
+ 	height: 200px;
+	line-height:200px;
+	display: flex;
+	justify-content: center;
+	font-size: 35px;
+ }
+ .total .aboutmain{
+	 float: left;
+	 width: 40%;
+ }
+  .total .abouttext{
+	 float: left;
+	 width: 40%;
+	 font-family: '나눔스퀘어';	
+	 color: darkslategrey;
+	 font-size: 15px;
+ }
+
+  .total .aboutmain .aboutmain{
+	 width: 300px;
+	 height: 600px;
+ }
+ .total .maincontent .onlinePub {
+	 position: absolute;
+	 height: 20%;
+
+ }
+
+
+/* Shop 페이지*/
+ul, li{margin:0;padding:0;list-style:none}
+
+.container{width:100%;max-width:1600px;margin:0 auto;overflow:hidden;}
+
+.gallery{margin:50px -20px;box-sizing:border-box; text-align: center;}
+
+/* .gallery:after{content:"";display:block;clear:both;visibility: hidden;} */
+
+.gallery li{width:20%;float:left;box-sizing:border-box;padding:0 20px;margin:0 0 50px 0;}
+
+.gallery li img{width:100%; height:auto;}
+
+.shopstocksimg{width: 250px !important; height: 250px!important;}
+
+.shopstocksname{font-size: 13px;text-decoration: none;}
+
+.shopstocksprice{font-size:13px;font-family: '나눔스퀘어';}
+
+
+.stockContainer{width: 250px !important; height: 330px!important;position: relative;}
+
+@media (max-width:1200px){
+    .container .gallery li{width:20%;}
+}
+@media (max-width:1000px){
+    .container .gallery li{width:33.33333%;}
+    .container .gallery li img{width:33.33333%;}
+}
+@media (max-width:800px){
+    .container .gallery li{width:50%;}
+    .container .gallery li img{width:33.33333%;}
+}
+@media (max-width:480px){
+    .container .gallery li{width:100%;}
+}
+.shopBlackBtn{
+	height:45px;
+	width: 180px;
+    font-size: 15px;
+	border-radius: 10px;
+	color: white;
+	font-weight: bold;
+	background-color: black;
+
+}	  
+
+.shopBlackBtn:hover{
+	cursor: pointer;
+} 
+/* Shop 페이지 (끝)*/
+
+
+/* policiesShipping 페이지 (시작)*/
+  .total .policiesShippingtext{
+	 float: left;
+	 width: 70%;
+	 font-family: '나눔스퀘어';	
+	 color: darkslategrey;
+	 font-size: 15px;
+ } 
+/* policiesShipping 페이지 (끝)*/
+
+
+
+
+
+/* detail-stocks 페이지 (시작)*/
+
+.categoryDetails{
+	display: flex;
+	font-family: '나눔스퀘어';	
+	font-size: 18px;	
+justify-content: center;
+	justify-content : center;
+	align-items: center;
+
+
+}
+.minitest{
+	width: 700px;
+}
+
+.total .maincontent .detailContainer{
+	float: right;
+	height: 700px;
+	width: 700px;
+	
+}
+.cart_modal{
+    top: 0; right: 0;
+    width: 287px; height: 100%;
+	background-color: white;
+	z-index: 999999;
+	display: none;
+	text-align: center;
+	position: fixed;
+}
+.total .maincontent .detailContainer .stocksDetailimgCon{
+	float: left;
+	width: 50%;
+	height: 50%;
+}
+.total .maincontent .detailContainer .stocksDetailimgCon .stocksDetailimg{
+	width:350px;
+	height:350px;
+}
+.total .maincontent .detailContainer .stocksDetailtext{
+	margin-left: 40px;
+	float: left;
+	height: 350px;
+	font-family: '나눔스퀘어';	
+	position: relative;
+	width: 300px;
+}
+.total .maincontent .detailContainer .stocksDetailExplan{
+	float: left;
+	margin: 20px;
+	background-color: #E0F2F1;
+	font-family: '나눔스퀘어';	
+	font-size: 18px;
+}
+
+.total .maincontent .detailContainer .stocksDetailtext .name{
+	margin-bottom: 15px;
+	font-weight: bold;
+	color: #282828;
+	font-size: 22px;
+	width: 100%;
+}
+.total .maincontent .detailContainer .stocksDetailtext .price{
+	margin-bottom: 10px;
+	color: #282828;
+	font-size: 20px;
+}
+.total .maincontent .detailContainer .detail{
+	color: #282828;
+	font-size: 17px;
+	color: black;
+	font-size: 15px;
+}
+
+
+.blueBtn{
+	width: 90%;
+	height: 30px;
+	background-color: rgb(21, 74, 235);
+	font-size: 17px;
+	color: white;
+	border: none;
+	margin-bottom: 5px;
+
+}
+.blueBtn:hover{
+	background-color: rgb(70, 111, 235);
+}
+
+.greyBtn{
+	width: 90%;
+	height: 30px;
+	background-color:darkgrey;
+	font-size: 17px;
+	color: black;
+	border: none;
+	margin-bottom: 5px;
+
+}
+.greyBtn:hover{
+	background-color: grey;
+}
+.orangeBtn{
+	width: 44%;
+	height: 30px;
+	background-color:#EDC06F;
+	font-size: 17px;
+	color: black;
+	border: none;
+	margin-bottom: 5px;
+
+}
+.orangeBtn:hover{
+	background-color: orange;
+}
+.cart{
+	background-color: black;
+	color: white;
+	width: 100%;
+	/* 세로정렬 */
+	height: 10%;
+	display : flex;
+	align-items : center;
+	justify-content : center;
+	/* 세로정렬 */
+}
+.subtotal{
+	font-family: '나눔스퀘어';	
+	color: black;
+	width: 100%;
+	height: 100px;
+	position: absolute;
+	bottom: 30px;
+	padding:20px ;
+	text-align: left;
+}
+.cartSimpleItems{
+	width: 90%;
+	margin: 0 auto;
+	height: 65%;
+	overflow-y: scroll;
+	
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+
+}
+
+.cartSimpleItems::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+
+.cartItmenList{
+	padding-top: 10px;
+
+	padding-bottom: 10px;
+
+	width: 100%;
+	display:inline-block; 
+	
+}
+.cartItmenListImg{
+	float: left;
+	width: 30%;
+	height: 100%;
+}
+.cartItmenListImg2{
+	float: left;
+	width: 20%;
+	height: 100%;
+}
+.cartItmenImg{
+	width: 68px;
+	height: 68px;
+	overflow: hidden;
+}
+.cartItmenListtext{
+	float: left;
+	width: 55%;
+	height: 100%;
+	font-size: 16px;
+	font-family: '나눔스퀘어';	
+	padding-left: 4px;
+	line-height: 150%;
+	
+}
+.cartItmenListtext2{
+	float: left;
+	width: 40%;
+	height: 100%;
+	text-align: left;
+	font-size: 16px;
+	font-family: '나눔스퀘어';	
+	padding-left: 4px;
+	line-height: 150%;
+	
+}
+.cartItmenListtext3{
+	float: left;
+	width: 12%;
+	height: 100%;
+	font-size: 16px;
+	font-family: '나눔스퀘어';	
+	padding-left: 4px;
+	line-height: 150%;
+	
+}
+
+
+.deleteItem{
+	float: left;
+	width: 5%;
+	display: block;
+}
+
+.cartItmenList:hover .deleteItem{
+	display: block;
+	
+}
+
+
+/*  detail-stocks 페이지 (끝)*/
+
+/* 상품등록 - 관리자 (시작)*/
+.registertable td{
+	 text-align: left;
+}
+
+/* 상품등록 - 관리자 (끝)*/
+
+
+#modalContainer {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#modalContainer.hidden {
+  display: none;
+}
+
+.VCmaincontent{
+	display: flex;
+	width: 1000px;
+	text-align: center;
+	justify-content: center;
+	background-color: white;
+	margin:0 auto; /* div div 안에 가운데 정렬 자동으로 해줌*/
+	font-size: 20px;
+	font-weight: bold;
+	font-family: '나눔스퀘어';	
+
+}
+.cartSimpleItemss{
+	float: left;
+	width: 65%;
+
+}
+.right20{
+	text-align: left;
+	width: 20%;
+	float: left;
+	font-size: 16px;
+	font-family: '나눔스퀘어';	
+	
+}
+
+/* 구매 내역 (시작) */
+.column{
+	display: flex;
+	flex-direction: column; 
+	align-items: center;
+	justify-content: center;
+	font-family: '나눔스퀘어';	
+}
+.myPagePurchase{
+	width: 100%;
+	max-width: 1200px;
+	min-width: 500px;
+	float: middle;
+	margin-bottom: 10px; 
+	padding: 10px; 
+	cursor: pointer;
+	font-family: '나눔스퀘어';	
+}
+.myPageOrderId{
+	color: black;
+	font-size: 18px;
+	font-weight: bold;
+}
+.mypageDate{
+	color: #B70037;
+	font-size: 18px;	
+}
+.halfContainer{
+	float: left;
+	width: 100%;
+	display: flex;
+	justify-content : center;
+	flex-wrap: wrap; /* 줄 바꿈 허용 */
+}
+.left50_l{
+	text-align: left;
+	width: 50%;
+	font-size: 16px;
+	font-family: '나눔스퀘어';	
+/*	background-color: beige;*/
+	display: flex;
+	justify-content : left;
+	
+}
+.right50_r{
+	text-align: right;
+	width: 50%;
+	font-size: 16px;
+	font-family: '나눔스퀘어';	
+	display: flex;
+	justify-content : right;	
+	color: darkgreen;
+	font-weight: bold;
+}
+
+.stocksTable{
+	border: 1px #a39485 solid;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	font-family: '나눔스퀘어';	
+	font-size: 14px;
+	width: 90%;
+	border-collapse: collapse;
+	border-radius: 5px;
+	overflow: hidden;
+	
+}
+.stocksTable thead {
+  font-weight: bold;
+  color: #fff;
+  background: #73685d;
+  font-size: 14px;
+  height: 30px;
+}
+
+.stocksTable tbody {
+	background: #faf0e6
+}
+
+/* 구매 내역 (끝) */
+
+
+
+
+/* Login (시작)*/
+.total2 {
+	font-family: '나눔스퀘어';	
+    position: relative;
+    justify-content: center;
+    width: 100%;
+    height: 100%; /* 화면 전체 높이 */
+    background: rgba(0, 0, 0, 0);
+    display: flex; /* 내부 요소 정렬을 위해 flex 사용 */
+}
+
+.login {
+    position: relative;
+    width: 50%; /* .login의 폭 */
+/*    background-color: #E0F2F1;*/
+    padding: 20px; /* 안쪽 여백 */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 선택 사항: 그림자 추가 */
+    
+    display: flex; /* 플렉스박스 적용 */
+    flex-direction: column; /* 요소를 세로로 정렬 */
+    align-items: center; /* 수평 중앙 정렬 */
+    justify-content: center; /* 수직 중앙 정렬 */
+    gap: 10px; /* 요소 간 간격 */
+}
+.total2 form{
+	position: relative;
+	align-items: center; 
+}
+.total2 .alert{
+	font-size: 16px;
+	color: red;
+}
+.total2 .input{
+	width: 300px;
+	height: 50px;
+	border-radius: 5px;
+	border: none;
+	border: 1px solid lightslategrey;
+	margin-bottom: 10px;
+}
+.total2 input.input1{
+	width: 300px;
+	height: 50px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border: 1px solid lightslategrey;
+	border-bottom: none;
+}
+.total2 input.input2{
+	width: 300px;
+	height: 50px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border: none;
+	border: 1px solid lightslategrey;
+}
+
+.total2 button{
+	width: 100%;
+	height: 40px;
+	margin-top: 10px;
+	background-color: gainsboro;
+	color: black;
+	border-radius:5px;
+	border: none;
+
+}
+
+.floating-label {
+    position: relative;
+}
+
+.floating-label label {
+    position: absolute;
+    top: 18px;
+    left: 15px;
+    font-size: 18px;
+    color: #aaa;
+    transition: 0.2s ease-in-out; /* 부드러운 애니메이션 */
+}
+
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
+    top: 5px;
+    left: 5px;
+    font-size: 12px;
+    color: #3498db; /* 포커스 시 텍스트 색상 */
+}
+button:hover {
+
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* hover 시 그림자 추가 */
+}
+/* Login (끝)*/
+
+
+
+/* contact (시작)*/
+.left55{
+	float: left;
+	width: 45%;
+	font-size: 16px;
+	font-family: '나눔스퀘어';	
+	display: flex;
+	justify-content : center;
+	flex-wrap: wrap; /* 줄 바꿈 허용 */
+	
+
+}
+.right45{
+	text-align: left;
+	width: 20%;
+	float: left;
+	font-size: 16px;
+	font-family: '나눔스퀘어';	
+	box-sizing: border-box;
+	
+}
+.left50{
+	text-align: left;
+	width: 50%;
+	font-size: 16px;
+	font-family: '나눔스퀘어';	
+	/*background-color: beige;*/
+	display: flex;
+	justify-content : center;
+	align-items : flex-start;	
+	flex-direction: column;
+	
+}
+.right50{
+	text-align: left;
+	width: 50%;
+/*	float: left;*/
+	font-size: 16px;
+	font-family: '나눔스퀘어';	
+	display: flex;
+	justify-content : center;
+	align-items : flex-start;	
+	flex-direction: column;	
+}
+
+.left55total {
+  flex-basis: 100%; /* 전체 너비 차지 */
+  display: flex;
+  justify-content : center;
+  align-items : flex-start;	
+  flex-direction: column;  
+  text-align: center; /* 가로 중앙 정렬 */
+}
+input.input3{
+	width: 90%;
+	height: 40px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border: 1px solid lightslategrey;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	outline: none;
+	display: flex;
+	justify-content : center;
+}
+input.input4{
+	width: 95%;
+	height: 40px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border: 1px solid lightslategrey;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	outline: none;
+	display: flex;
+	justify-content : center;
+}
+
+input.input3:focus {
+    border-bottom: 2px solid royalblue;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 포커스 시 살짝 그림자 효과 추가 */
+}
+input.input4:focus {
+    border-bottom: 2px solid royalblue;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 포커스 시 살짝 그림자 효과 추가 */
+}
+.contactTitle{
+	font-size: 16px;
+	font-family: "롯데마트잠실체4";
+	text-align: center;
+}
+.contactText{
+	font-size: 14px;
+	font-family: '나눔스퀘어';	
+	box-sizing: border-box;	
+}
+.contactSubmit{
+	width: 250px;
+	height: 40px;
+	margin-top: 15px;
+	background-color: #EDC06F;
+	border-radius: 20px;
+	border: none;
+	cursor: pointer;
+}
+/* contact (끝)*/
+
+
+.total .maincontent2{
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    justify-content: flex-end; /* 아래로 정렬 */
+    align-items: center;
+    
+}
+@media screen and (min-width: 1200px) {
+.maincontent2{
+	width: 1200px;
+	margin:0 auto; /* div div 안에 가운데 정렬 자동으로 해줌*/
+	display: flex;
+	
+	}
+}
+
+.status{
+	font-family: '나눔스퀘어';	
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    width: 70%;
+    justify-content: space-between;
+    margin-top: 10px;
+    flex-wrap: wrap; /* 내용이 넘치면 다음 줄로 이동 */
+}
+
+.status-set{
+	display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    justify-content: flex-end; /* 아래로 정렬 */
+    align-items: center;
+	
+}
+
+.status-item{
+	flex: 0 0 120px; /* 아이템 크기 고정 (너비 100px) */
+	font-size: 14px;
+	height: 40px;
+	text-align: center;
+	flex: 1 1 auto; /* 항목이 부모 크기에 따라 자동으로 줄어듦 */
+	align-items: center; /* 세로 중앙 정렬 */
+}
+.status-item2{
+	font-size: 25px;
+	width: 75px;
+	text-align: center;
+	/* color: #a39485; */
+	align-items: center; /* 세로 중앙 정렬 */
+}
+
+.button-left{
+    display: flex;
+    justify-content: left; /* 가로 중앙 정렬 */
+    align-items: left; /* 세로 중앙 정렬 */
+    width: 35%;
+    /*background-color: royalblue;*/
+}
+.button-right{
+    display: flex;
+    justify-content: right; /* 가로 중앙 정렬 */
+    align-items: right; /* 세로 중앙 정렬 */
+    width: 35%;
+    /*background-color: #EDC06F;*/
+}
+.total .maincontent .beigebtn{
+	 background-color: #faf0e6;
+	 border-radius: 10px;
+	 color: black;
+	 font-size: 15px;
+	 font-family: "롯데마트잠실체4";
+	 border: none;
+	 padding: 8px 5px;
+	 width: 120px;
+	 height: 40px;
+	 margin-right: 20px;
+	 
+ } 
+.total .maincontent .brownbtn{
+	 background-color: #73685d;
+	 border-radius: 10px;
+	 color: white;
+	 font-size: 15px;
+	 font-family: "롯데마트잠실체4";
+	 border: none;
+	 padding: 8px 5px;
+	 width: 120px;
+	 height: 40px;
+ }  
+
+.total .maincontent .greybtn{
+	 background-color: lightgray;
+	 border-radius: 10px;
+	 color: black;
+	 font-size: 15px;
+	 font-family: "롯데마트잠실체4";
+	 border: none;
+	 padding: 8px 5px;
+	 width: 120px;
+	 height: 40px;
+ }  
+
+
+
+/* 상세 구매 내역 (시작) mypage-details */
+.stocksDTable{
+	border: 1px #a39485 solid;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	font-family: '나눔스퀘어';	
+	font-size: 18px;
+	width: 70%;
+	border-collapse: collapse;
+	border-radius: 5px;
+	overflow: hidden;
+	
+}
+.stocksDTable thead {
+  font-weight: bold;
+  color: #fff;
+  background: #73685d;
+  font-size: 20px;
+  height: 40px;
+}
+.myPagetitle{
+  font-family: '나눔스퀘어';	
+  font-weight: bold;
+}
+.myPagetitle2{
+  font-family: '나눔스퀘어';
+  font-size: 18px;
+  font-weight: bold;
+  float: left;
+}
+
+.stocksDTable tbody {
+	background: #faf0e6
+}
+
+.disabled-btn {
+    pointer-events: none;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+/* 상세 구매 내역 (끝) mypage-details */
+
+/* 관리자 상세 구매 내역 (시작) history-config-details */
+.status-click:hover{
+	cursor: pointer;
+}
+.explanation{
+	font-family: '나눔스퀘어';	
+	font-size: 18px;
+	
+}
+.refunded-row td {
+    text-decoration: line-through;
+    color: darkgray;
+}
+/* 관리자 상세 구매 내역 (끝) history-config-details */
+
+
+
+
+

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" th:href="@{/jystyle.css}">
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<title>About | COPPER & BRASS</title>
+</head>
+
+<body>
+	<nav th:replace="~{header :: navbarFragment}"></nav>
+	<div class="total">
+		<div class=" colorheader" >
+		Shop All
+		</div>
+	</div>
+<br><br>
+	<div class="total">
+		<div class="maincontent">
+			<a th:if="${#authentication.authorities.size() == 1 and #authentication.authorities[0].authority == 'ROLE_ADMIN'}" 
+			   th:href="@{/copperbrass/shop-register}">
+			    <button class="shopBlackBtn" style="float: right;">Register</button>
+			</a>
+
+		</div>
+	</div>
+
+
+
+
+	
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+	<div>
+		<div class="container">
+			<ul class="gallery" id="stockslist">
+				<li th:each="firstStock : ${firstStocks}">
+					<div class="stockContainer">
+						<a th:href="@{|/copperbrass/shop-details/${firstStock.num}|}" >
+						<img class="shopstocksimg" th:src="${firstStock.imgsrc}">
+						<div class="shopstocksname"th:text="${firstStock.name}"></div>
+						<hr style="width:20%;height:1px;border:none;background-color:black;margin-top: 4px;margin-bottom: 8px;">
+						<div class="shopstocksprice"th:text="${firstStock.price}"></div>
+						</a>
+					</div>
+				</li>
+			</ul>
+		</div> 			
+	</div>
+	
+
+	<div class="total">
+		<div class="maincontent">
+			<input class="shopBlackBtn" type="button" id="btn_add"  value="load more"/>	
+		</div>
+	</div>
+
+	<br><br><br>
+	<nav th:replace="~{footer :: FooterFragment}"></nav>	
+</body>
+
+<script src="https: //code.jquery.com/jquery-1.11.3.js" type="text/javascript"></script> 
+<script th:inline="javascript">
+	
+/*table row 추가하는 법 - 안쓰임*/
+
+var lastStockNum = [[${lastStockNum}]];
+
+console.log(lastStockNum);
+console.log([[${#lists.size(firstStocks)}]]);
+if (lastStockNum != 0 || [[${#lists.size(firstStocks)}]] <11){
+				
+}
+
+const urlParams = new URL(location.href).searchParams;
+const categoryname = urlParams.get('num');
+
+const token = $("meta[name='_csrf']").attr("content")
+const header = $("meta[name='_csrf_header']").attr("content");
+const name = $("#userName").val();
+
+
+	$(function(){
+		$("#btn_add").click(function(){
+			$.ajax({
+				type:"POST",
+				url:"findAllProductList",
+				data:{"lastStockNum":lastStockNum,
+				"category":categoryname},
+				
+			    //추가해야 하는 부분
+			    beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
+				
+				success:function(productList){
+					var ul_list = $("#stockslist");
+					
+					//alert(productList.length);
+					let productInfo="";
+					for(let i=0;i<productList.length;i++){
+
+						productInfo+="<li>";
+						productInfo+="<div class='stockContainer'>";	
+						productInfo+="<a href='/copperbrass/shop-details/"+productList[i].num+"'>";	
+						productInfo+="<img class='shopstocksimg' src="+productList[i].imgsrc+">";
+						productInfo+="<div class='shopstocksname'>"+productList[i].name+"</div>";
+						productInfo+='<hr style="width:20%;height:1px;border:none;background-color:black;margin-top: 4px;margin-bottom: 8px;">';
+						productInfo+="<div class='shopstocksprice'>"+productList[i].price+"</div>";
+						productInfo+="</a>";
+						productInfo+="</div>";
+						productInfo+="</li>";
+						
+						if(i==productList.length-1){
+							lastStockNum = productList[i].num;
+							console.log(productInfo);
+						}
+					}
+					//$("#productList").html(productInfo);
+					//ul_list안쪽에 li추가
+					ul_list.append(productInfo);
+				}
+			});//ajax	
+		});//click			
+	});//ready
+	
+
+
+
+
+
+	
+</script>
+
+</html>
+
+
+

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" th:href="@{/jystyle.css}">
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>	
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>		
+	<title>MyPage | COPPER & BRASS</title>
+</head>
+<script>
+
+
+
+const token = $("meta[name='_csrf']").attr("content");
+const header = $("meta[name='_csrf_header']").attr("content");
+
+
+
+
+
+$(function () {
+    $(".refund-click").click(function () {
+        let selectedIds = [];
+        let purchaseId = "[[${targetPurchase.id}]]";
+        let orderId = "[[${targetPurchase.orderid}]]"
+
+        // 체크박스 값 수집
+        $("input[type='checkbox']").each(function () {
+            if ($(this).is(":checked")) {
+                selectedIds.push($(this).val());
+            } else {
+                selectedIds.push(`unchecked-${$(this).val()}`);
+            }
+        });
+
+        //alert(purchaseId);
+
+        // 서버로 데이터 전송
+        $.ajax({
+            type: "POST",
+            url: "/copperbrass/history-config-details/process-refund",
+            contentType: "application/json", // JSON 데이터 형식
+            data: JSON.stringify({ selectedIds: selectedIds , purchaseId: purchaseId, orderId: orderId}), // JSON으로 변환
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (response) {
+                console.log("서버 처리 완료", response);
+                window.location.href = '/copperbrass/mypage_details/'+orderId;
+                
+            },
+            error: function (xhr, status, error) {
+                console.error("오류 발생:", status, error, xhr.responseText);
+                alert("Error: " + xhr.responseText);
+            },
+        });
+    });
+});
+
+
+	
+</script>
+<body>
+	<nav th:replace="~{header :: navbarFragment}"></nav>
+	<div class="total">
+		<div class=" colorheader" >
+		My Page
+		</div>
+	</div>
+<br><br>
+	<div class="total">
+		<div class="maincontent2">	
+			<div class="myPagetitle">Refund</div>
+			<div class="explanation">Please check the product you want to refund.<br>
+			If 'Refund Status' is 'Refund Request', product changes are possible.
+			</div>
+			<br>
+			<div class="status">
+				<div class="myPagetitle2">🟢 Purchase Status</div>
+			</div>
+			<div class="status">
+				<div class="status-set">				 				
+					<div class="status-item2" th:text="${T(java.lang.Integer).parseInt(targetPurchase.deposit) >= 0 ? '●' : '○'}"></div>
+					<div class="status-item">Waiting for<br>deposit</div>
+				</div>
+				<div class="status-set">
+					<div class="status-item2" th:text="${T(java.lang.Integer).parseInt(targetPurchase.deposit) >= 1 ? '●' : '○'}"></div>
+					<div class="status-item">Deposit<br>confirmation</div>
+				</div>
+				<div class="status-set">
+					<div class="status-item2" th:text="${T(java.lang.Integer).parseInt(targetPurchase.deposit) >= 2 ? '●' : '○'}"></div>
+					<div class="status-item">Preparing for<br>delivery</div>
+				</div>
+				<div class="status-set">
+					<div class="status-item2" th:text="${T(java.lang.Integer).parseInt(targetPurchase.deposit) >= 3 ? '●' : '○'}"></div>
+					<div class="status-item">In delivery</div>
+				</div>
+				<div class="status-set">
+					<div class="status-item2" th:text="${T(java.lang.Integer).parseInt(targetPurchase.deposit) >= 4 ? '●' : '○'}"></div>
+					<div class="status-item">Delivery<br>completed</div>
+				</div>	
+			</div>
+			<br>
+			<div th:if="${hasRefunded}" class="status">
+				<div class="myPagetitle2">🔵 Refund Status</div>
+			</div>			
+			<div th:if="${hasRefunded}" class="status">
+				<div class="status-set">				 				
+					<div class="status-item2" th:text="${refundhistory != null && refundhistory.status != null && T(java.lang.Integer).parseInt(refundhistory.status) >= 1 ? '●' : '○'}"></span>></div>
+					<div class="status-item">Request<br>a refund</div>
+				</div>
+				<div class="status-set">
+					<div class="status-item2" th:text="${refundhistory != null && refundhistory.status != null && T(java.lang.Integer).parseInt(refundhistory.status) >= 2 ? '●' : '○'}"></div>
+					<div class="status-item">Refund<br>confirmation</div>
+				</div>
+				<div class="status-set">
+					<div class="status-item2" th:text="${refundhistory != null && refundhistory.status != null && T(java.lang.Integer).parseInt(refundhistory.status) >= 3 ? '●' : '○'}"></div>
+					<div class="status-item">Refund<br>completed</div>
+				</div>				
+			</div>	
+			
+		</div>
+	</div>
+
+<!--<div class="status-click" value="4" th:text="${T(java.lang.Integer).parseInt(targetPurchase.deposit) >= 4 ? '✅' : '🔲'}"></div>-->
+	
+	<!--<div th:text="${targetPurchase.id}"></div>-->
+		<div class="total">
+			<div class="maincontent">	
+				<br>
+				
+		        <table class="stocksDTable" >
+		            <thead>
+		                <tr>
+							<th></th>
+							<th>Img</th>
+		                    <th>Product</th>
+		                    <th>Count</th>
+		                    <th>Price</th>
+		                    <th>Status</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <tr th:each="detail : ${purchasedetails}" th:classappend="${detail.status == 'Refunded'} ? 'refunded-row' : ''">
+							<td><input type="checkbox" name="selectedIds" th:value="${detail.id}" class="checkRefund" th:checked="${detail.status == 'Refunded'? 'checked' : null}"></td>
+							<td><img th:src="@{${detail.stock.imgsrc}}" alt="Stock Image" width="50" height="50"/></td>
+		                    <td th:text="${detail.stock.name}"></td>
+		                    <td th:text="${detail.count}"></td>
+		                    <td th:text="${detail.price}"></td>
+		                    <td th:text="${detail.status}"></td>
+		                </tr>
+		            </tbody>
+		        </table>	
+			</div>
+		</div>
+		<div class="total">
+			<div class="maincontent">	
+				<div class="button-left">		
+					<button class="greybtn" th:onclick="location.href='javascript:history.back();'">previous</button>
+				</div>
+				<div class="button-right">
+					<button class="beigebtn"  th:onclick="location.href='javascript:history.back();'">cancel</button>
+					<button type="submit" class="brownbtn refund-click">Refund</button>
+				</div>
+			</div>
+		</div>	
+	<br>
+	
+	
+
+<!-- https://apost.dev/862/ -->
+<div >
+</div>
+
+    
+
+	<div style="width: 80%;">
+	<br>
+
+</div>
+
+	
+	<br><br><br><br>
+
+	<br><br><br>
+	<nav th:replace="~{footer :: FooterFragment}"></nav>	
+</body>
+
+<script src="https: //code.jquery.com/jquery-1.11.3.js" type="text/javascript"></script> 
+<script th:inline="javascript">
+	function view(id){
+		alert(id);
+	}
+</script>
+
+</html>
+
+
+

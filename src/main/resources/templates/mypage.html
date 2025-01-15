@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" th:href="@{/jystyle.css}">
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>	
+	<title>MyPage | COPPER & BRASS</title>
+</head>
+
+<script>
+
+const urlParams = new URL(location.href).searchParams;
+const categoryname = urlParams.get('num');
+
+const token = $("meta[name='_csrf']").attr("content");
+const header = $("meta[name='_csrf_header']").attr("content");
+const name = $("#userName").val();
+let current_page = 1;
+
+	$(function(){
+		$("#btn_add").click(function(){
+			
+			$.ajax({
+				type:"POST",
+				url:"mypage/purchases",
+				data:{"Page":current_page},
+				
+			    //추가해야 하는 부분
+			    beforeSend : function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
+				
+				success:function(productList){
+					current_page += 1;
+					
+					
+					var ul_list = document.getElementById('column');
+					
+					let purchaseDetailsHTML = "";
+
+	                if (productList.length > 0) {
+						
+	                    productList.forEach(orderid => {
+
+							
+                      	   	let purchaseDetailsHTML = "";
+	                       orderid.purchaseDetailsList.forEach(item =>{
+							   
+								purchaseDetailsHTML += `
+
+					                <tr>
+										<td><img src="${item.imgsrc}" alt="Stock Image" width="50" height="50"/></td>
+					                    <td>${item.stockName || 'Unknown'}</td>
+					                    <td>${item.count || 0}</td>
+					                    <td>${item.price || 'N/A'}</td>
+					                </tr>
+	                        
+	                        	`
+							   
+						   });
+			
+					         
+					//console.log(purchaseDetailsHTML);
+
+	                AddHistory = `
+	                
+					<div class="myPagePurchase" style="border: 1px solid #ddd;" onclick="window.location='/copperbrass/mypage_details/${orderid.orderId}'">
+				    <div class="myPageOrderId">
+				       주문번호 :<span>${orderid.orderId}</span>
+				    </div>			
+				    <div>
+				        <table  class="stocksTable">
+				            <thead>
+				                <tr>
+									<th>Img</th>
+				                    <th>Stock</th>
+				                    <th>Count</th>
+				                    <th>Price</th>
+				                </tr>
+				            </thead>
+				            <tbody>
+								${purchaseDetailsHTML}
+				            </tbody>
+				        </table>								
+				    </div>	
+				    <div>
+						<span class="mypageDate">
+						    ${
+						        (() => {
+						            const date = new Date(orderid.orderDateTime);
+						            const year = date.getFullYear();
+						            const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요
+						            const day = String(date.getDate()).padStart(2, '0');
+						            return `${year} - ${month} - ${day}`;
+						        })()
+						    }
+						</span>   
+				    </div>	     
+
+					<div class="halfContainer">
+					    <div class="left50_l">
+					        $<span>${orderid.totalPrice}</span>
+					    </div>
+					    <div class="right50_r">
+						    <span>
+						        ${
+						            orderid.deposit === '0' ? '입금대기' :
+						            orderid.deposit === '1' ? '입금확인' :
+						            orderid.deposit === '2' ? '출고준비' :
+						            orderid.deposit === '3' ? '배송중' :
+						            orderid.deposit === '4' ? '배송완료' :
+						            orderid.deposit === '8' ? '환불' :
+						            orderid.deposit === '9' ? '구매확정' :
+						            '상태 없음'
+						        }
+						    </span>
+					    </div>
+				    </div>
+				</div>
+					                
+	                `
+	               // console.log(AddHistory);
+	               // console.log(ul_list);
+	                ul_list.innerHTML += AddHistory;
+	                
+	                
+	             		});
+                	} else {
+                    	alert("No item")
+                	}	
+				} //success
+			});//ajax	
+		});//click			
+	});//ready
+		
+	
+	
+</script>
+
+<body>
+	<nav th:replace="~{header :: navbarFragment}"></nav>
+	<div class="total">
+		<div class=" colorheader" >
+		My Page
+		</div>
+	</div>
+	
+<br><br>
+
+	<div class="total">
+		<div class="maincontent">
+			Purchase history
+		</div>
+	</div>
+	<br>
+	
+
+	<div class="total" th:if="${#lists.isEmpty(mypageList)}" >
+		<div class="maincontent">
+			No history
+		</div>
+	</div>
+	<div class="total">
+		<div class="maincontent">	
+			<div class="column" id="column">
+				<div class="myPagePurchase" style="border: 1px solid #ddd;" th:each="purchase : ${mypageList}" th:onClick="window.location='/copperbrass/mypage_details/'+ [[${purchase.orderid}]]">
+				    <div class="myPageOrderId">
+				       주문번호 :<span th:text="${purchase.orderid}"></span>
+				    </div>			
+				    <div>
+				        <table class="stocksTable" >
+				            <thead>
+				                <tr>
+									<th>Img</th>
+				                    <th>Stock</th>
+				                    <th>Count</th>
+				                    <th>Price</th>
+				                </tr>
+				            </thead>
+				            <tbody>
+				                <tr th:each="detail : ${purchase.purchaseDetailsList}">
+									<td><img th:src="@{${detail.stock.imgsrc}}" alt="Stock Image" width="50" height="50"/></td>
+				                    <td th:text="${detail.stock.name}">Stock Name</td>
+				                    <td th:text="${detail.count}">0</td>
+				                    <td th:text="${detail.price}">0</td>
+				                </tr>
+				            </tbody>
+				        </table>
+				    </div>	
+				    <div>
+				       <span class="mypageDate" th:text="${#temporals.format(purchase.orderdatetime, 'yyyy - MM - dd')}"></span>
+				    </div>	     
+
+					<div class="halfContainer">
+					    <div class="left50_l">
+					        $<span th:text="${purchase.totalprice}"></span>
+					    </div>
+					    <div class="right50_r">
+					        <span th:if="${purchase.deposit}=='0'">입금대기</span>
+					        <span th:if="${purchase.deposit}=='1'">입금확인</span>
+					        <span th:if="${purchase.deposit}=='2'">출고준비</span>
+					        <span th:if="${purchase.deposit}=='3'">배송중</span>
+					        <span th:if="${purchase.deposit}=='4'">배송완료</span>
+					        <span th:if="${purchase.deposit}=='8'">환불</span>
+					        <span th:if="${purchase.deposit}=='9'">구매확정</span>
+					    </div>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br><br>
+	<div class="total">
+		<div class="maincontent">
+			<input class="shopBlackBtn" type="button" id="btn_add"  value="load more"/>	
+		</div>
+	</div>	
+	<br><br>
+
+	<br><br><br>
+	<nav th:replace="~{footer :: FooterFragment}"></nav>	
+</body>
+
+<script src="https: //code.jquery.com/jquery-1.11.3.js" type="text/javascript"></script> 
+<script th:inline="javascript">
+	function view(id){
+      var newForm = document.createElement("form");
+      newForm.setAttribute("method", "POST");
+      newForm.setAttribute("action", "/copperbrass/mypage_details");
+      
+      
+      var newInput = document.createElement("input");
+      newInput.setAttribute("type", "text");
+      newInput.setAttribute("name", "newInputId");
+      newInput.setAttribute("id", "newInputId");
+      newInput.setAttribute("value", id);   
+      
+// csrf 처리
+      var newInput2 = document.createElement("input");
+      newInput2.setAttribute("type", "hidden");
+      newInput2.setAttribute("name", [[${_csrf.parameterName}]]);
+      newInput2.setAttribute("value", [[${_csrf.token}]]);
+      
+      // input을 form의 자식태그로 붙이기
+      newForm.appendChild(newInput);
+      newForm.appendChild(newInput2);
+      
+      // form을 body태그의 자식태그로 붙이기
+      document.body.appendChild(newForm);
+      newForm.submit();      
+      
+	}
+</script>
+
+</html>
+
+
+

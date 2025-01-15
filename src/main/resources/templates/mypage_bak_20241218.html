@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" th:href="@{/jystyle.css}">
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>	
+	<title>MyPage | COPPER & BRASS</title>
+</head>
+<script>
+    let currentPage = 0;
+	console.log("currentPage"+currentPage);
+    function loadMorePurchases() {
+        currentPage += 1; // 페이지 번호 증가
+
+		fetch('/copperbrass/mypage/purchases?page=' + currentPage)
+		    .then(response => {
+		        if (!response.ok) {
+		            throw new Error('Network response was not ok: ' + response.status);
+		        }
+		        return response.json();  // JSON 파싱
+		    })
+		    .then(data => {
+		        console.log('Fetched Data:', data);
+		        const container = document.getElementById('purchase-container');
+		        if (!data || !data.length) {
+		            console.log("No data returned");
+		            return;
+		        }
+		
+		        data.forEach(purchase => {
+		            const div = document.createElement('div');
+		            div.classList.add('purchase-item');
+		            div.innerHTML = `
+		                <h3>Order ID: ${purchase.id}</h3>
+		                <p>Order Date: ${new Date(purchase.orderdatetime).toLocaleDateString()}</p>
+		                <p>Total Price: ${purchase.totalprice}</p>
+		            `;
+		            container.appendChild(div);
+		        });
+		    })
+		    .catch(error => {
+		        console.error('Error fetching data:', error);
+		    });
+
+
+
+    }
+</script>
+<body>
+	<nav th:replace="~{header :: navbarFragment}"></nav>
+	<div class="total">
+		<div class=" colorheader" >
+		My Page
+		</div>
+	</div>
+	
+<br><br>
+
+	<div class="total">
+		<div class="maincontent">
+			Purchase history
+		</div>
+	</div>
+	<br>
+	
+
+	<div class="total" th:if="${#lists.isEmpty(mypageList)}" >
+		<div class="maincontent">
+			구매 내역이 존재하지 않습니다.
+		</div>
+	</div>
+	<div class="total">
+		<div class="maincontent">	
+			<div class="column">
+				<div class="myPagePurchase" style="border: 1px solid #ddd;" th:each="purchase : ${mypageList}" th:onClick="window.location='/copperbrass/mypage_details?id=1'">
+				    <div class="myPageOrderId">
+				       <span th:text="${purchase.orderid}"></span>
+				    </div>			
+				    <div>
+				        <table border="1">
+				            <thead>
+				                <tr>
+									<th>Img</th>
+				                    <th>Stock</th>
+				                    <th>Count</th>
+				                    <th>Price</th>
+				                </tr>
+				            </thead>
+				            <tbody>
+				                <tr th:each="detail : ${purchase.purchaseDetailsList}">
+									<td><img th:src="@{${detail.stock.imgsrc}}" alt="Stock Image" width="50" height="50"/></td>
+				                    <td th:text="${detail.stock.name}">Stock Name</td>
+				                    <td th:text="${detail.count}">0</td>
+				                    <td th:text="${detail.price}">0</td>
+				                </tr>
+				            </tbody>
+				        </table>
+				    </div>	
+				    <div>
+				       <span class="mypageDate" th:text="${#temporals.format(purchase.orderdatetime, 'yyyy - MM - dd')}"></span>
+				    </div>	     
+
+					<div class="halfContainer">
+					    <div class="left50_l">
+					        $<span th:text="${purchase.totalprice}"></span>
+					    </div>
+					    <div class="right50_r">
+					        <span th:if="${purchase.deposit}=='0'">입금대기</span>
+					        <span th:if="${purchase.deposit}=='1'">입금확인</span>
+					        <span th:if="${purchase.deposit}=='2'">출고준비</span>
+					        <span th:if="${purchase.deposit}=='3'">배송중</span>
+					        <span th:if="${purchase.deposit}=='9'">배송완료</span>
+					    </div>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button id="load-more-btn" onclick="loadMorePurchases()">더 보기</button>
+	
+	<br><br><br><br>
+
+	<br><br><br>
+	<nav th:replace="~{footer :: FooterFragment}"></nav>	
+</body>
+
+<script src="https: //code.jquery.com/jquery-1.11.3.js" type="text/javascript"></script> 
+<script th:inline="javascript">
+	function view(id){
+      var newForm = document.createElement("form");
+      newForm.setAttribute("method", "POST");
+      newForm.setAttribute("action", "/copperbrass/mypage_details");
+      
+      
+      var newInput = document.createElement("input");
+      newInput.setAttribute("type", "text");
+      newInput.setAttribute("name", "newInputId");
+      newInput.setAttribute("id", "newInputId");
+      newInput.setAttribute("value", id);   
+      
+// csrf 처리
+      var newInput2 = document.createElement("input");
+      newInput2.setAttribute("type", "hidden");
+      newInput2.setAttribute("name", [[${_csrf.parameterName}]]);
+      newInput2.setAttribute("value", [[${_csrf.token}]]);
+      
+      // input을 form의 자식태그로 붙이기
+      newForm.appendChild(newInput);
+      newForm.appendChild(newInput2);
+      
+      // form을 body태그의 자식태그로 붙이기
+      document.body.appendChild(newForm);
+      newForm.submit();      
+      
+	}
+</script>
+
+</html>
+
+
+

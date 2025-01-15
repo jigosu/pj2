@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" th:href="@{/jystyle.css}">
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>About | COPPER & BRASS</title>
+</head>
+<script th:inline="javascript">
+
+
+    /*<![CDATA[*/
+
+    var message = [[${duplicate}]]
+
+    if (message!=null){
+    	alert(message);
+
+    location.replace([[${searchUrl}]]); 		
+		
+	}
+
+
+    /*]]>*/
+
+</script>
+
+<body>
+	<nav th:replace="~{header :: navbarFragment}"></nav>
+	<div class="total">
+		<div class=" colorheader" >
+		Register Item
+		</div>
+
+	</div>
+<br><br>
+	<form  method="post" name="board_form" th:action="@{/copperbrass/upload}" enctype="multipart/form-data">
+		<div class="total">
+			<input type="hidden" id="numId" name="numId" th:value="${updatestocks.num}">
+			<table class="registertable" >
+				<tr>
+					<td colspan="2">Name : 
+						<input type="text" name="title" id="title" style="width: 80%;" th:value="${updatestocks.name}">
+					</td>
+		
+				</tr>
+				
+				<tr>
+					<td> Category : 			
+						 <select name="category" style="width: 60%;" th:value="${updatestocks.category}">
+						  <option value="Notebook" th:selected="${updatestocks.category}=='Notebook'">Notebook</option>
+						  <option value="Greeting Cards" th:selected="${updatestocks.category}=='Greeting Cards'">Greeting Cards</option>
+						  <option value="Wrapping Paper/Bags"  th:selected="${updatestocks.category}=='Wrapping Paper/Bags'">Wrapping Paper/Bags</option>
+						  <option value="Sticky Notes"  th:selected="${updatestocks.category}=='Sticky Notes'">Sticky Notes</option>
+						</select>
+					</td>
+					<td>Price : <input type="text" id="price" name="price" th:value="${updatestocks.price}"></td>
+				</tr>
+
+				<tr>
+					<td colspan="2">Image : 
+						<input th:if="${updatestocks.imgsrc==null}" type="file" name="file" id="file" accept="image/*" style="width: 400px;"  required multiple>
+						<input th:unless="${updatestocks.imgsrc==null}" type="text" name="file" id="file" th:value="${updatestocks.imgsrc}" style="width: 400px;" readonly>
+					</td> 
+				</tr>
+					
+				<tr>
+					<td colspan="2">
+						<textarea id="explanation" name="explanation" rows="10" cols="100" th:value="${updatestocks.explanation}" ></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input th:if="${updatestocks.imgsrc==null}" type="submit" value="Submit" onclick="send('R');">
+						<input th:unless="${updatestocks.imgsrc==null}" type="submit" value="Update" onclick="send('U');" >
+					</td>
+				</tr>
+			</table>
+			
+		</div>
+		
+	</form>
+
+	<br><br><br>
+	<nav th:replace="~{footer :: FooterFragment}"></nav>	
+</body>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script th:inline="javascript">
+
+	function send(param){
+		
+		const regexp = /^[0-9]*.\d{2}$/;
+		
+		var f = document.board_form;
+		
+		if(param=='U'){
+			f.action='/copperbrass/update';
+		};
+		
+//		if($("#title").val() == ""){alert("제품명을 입력하세요"); return false;}
+	//	if($("#price").val() == ""){alert("가격을 입력하세요"); return false;}
+	//	if(!regexp.test($("#price").val())){alert("소수점 둘째자리까지 입력해주세요."); return false;}
+		
+		
+		
+		f.submit();
+		
+		
+	}
+</script>
+
+</html>
+
+
+

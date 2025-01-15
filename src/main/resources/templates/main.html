@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" th:href="@{/jystyle.css}">
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>COPPER & BRASS</title>
+</head>
+
+<body>
+
+
+
+
+	<nav th:replace="~{header :: navbarFragment}"></nav>
+
+	<div class="total">
+
+		<div class="mainbg1">
+			<div class="mainwhite">Welcome to <br>
+				Copper and Brass Paper Goods <br>
+				<button class="blackbutton">Shop now</button>
+			</div>
+		</div>
+		<br>
+
+		<div class="maincontent">
+
+			<table style="width: 90%;">
+				<colgroup>
+					<col width="7%" />
+					<col width="18%" />
+					<col width="7%" />
+					<col width="18%" />
+					<col width="7%" />
+					<col width="18%" />
+					<col width="6%" />
+					<col width="19%" />
+				</colgroup>
+				<tr>
+					<td><img class="mainicon" th:src="@{/img/main/shipping.png}"></td>
+					<td>Free Shipping</td>
+					<td><img class="mainicon" th:src="@{/img/main/refund.png}"></td>
+					<td>Refund Policy</td>
+					<td><img class="mainicon" th:src="@{/img/main/payment.png}"></td>
+					<td>Secure Payment</td>
+					<td><img class="mainicon" th:src="@{/img/main/protection.png}"></td>
+					<td>Privacy Protection</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="details">Free shipping over $75</td>
+					<td></td>
+					<td class="details">No Refund</td>
+					<td></td>
+					<td class="details">100% Secure Payment</td>
+					<td></td>
+					<td class="details">Ensure privacy for customers</td>
+				</tr>
+			</table>
+		</div>
+		<br><br>
+		<div class="maincontent">
+			<table style="width: 90%;" class="maintable">
+				<colgroup>
+					<col width="33%" />
+					<col width="33%" />
+					<col width="33%" />
+				</colgroup>
+				<tr>
+					<td>
+						<div class="ytotal" >
+							<div class="yellowbox" id="mainbox1yb"></div>
+							<div class="big" id="mainbox1">
+								<div class="temp">
+									<img class="mainbox" id="mainbox1img" th:src="@{/img/main/mainbox2.JPG}"width="200px" />
+									<div class="main_image_text" id="mainbox1txt">Stickers</div>
+									<a th:href="@{|/copperbrass/shop?num=Sticky Notes|}"><input type="button" class="mainbox_shop_btn" value="Shop now" ></input></a>
+								</div>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="ytotal">
+							<div class="yellowbox" id="mainbox2yb"></div>
+							<div class="big" id="mainbox2">
+								<div class="temp">
+									<img class="mainbox" id="mainbox2img" th:src="@{/img/main/mainbox3.JPG}" width="200px" />
+									<div class="main_image_text" id="mainbox2txt">Full Sized<br>Notebooks</div>
+									<a th:href="@{|/copperbrass/shop?num=Notebook|}">
+										<input type="button" class="mainbox_shop_btn" value="Shop now"></input>
+									</a>
+								</div>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="ytotal">
+							<div class="yellowbox" id="mainbox3yb"></div>
+							<div class="big" id="mainbox3">
+								<div class="temp">
+									<img class="mainbox" id="mainbox3img" th:src="@{/img/main/mainbox5.JPG}" width="200px" />
+									<div class="main_image_text" id="mainbox3txt">Notebooks</div>
+									<a th:href="@{|/copperbrass/shop?num=Notebook|}">
+										<input type="button" class="mainbox_shop_btn" value="Shop now"></input>
+									</a>
+								</div>
+							</div>
+						</div>
+					</td>					
+
+				</tr>
+			</table>
+		</div>
+		
+		
+		<br><br>
+		<div class="maincontent">
+			<div style="font-weight: bold;">Best Sellers</div>
+		</div>
+		<br>
+		<div class="maincontent bestseller" >
+			<table style="width: 100%;">
+				<colgroup>
+					<col width="18%" />
+					<col width="18%" />
+					<col width="18%" />
+					<col width="18%" />
+					<col width="28%" />
+				</colgroup>
+				<tr>
+					<td colspan="4">
+						<input type="button" class="bestsellerbtn margin" value="Notebook" onclick="changeBestsellers('bs1');">
+						<input type="button" class="bestsellerbtn margin" value="Greeting Cards" onclick="changeBestsellers('bs2');">
+						<input type="button" class="bestsellerbtn margin" value="Wrapping Paper/Bags" onclick="changeBestsellers('bs3');">
+						<input type="button" class="bestsellerbtn margin" value="Sticky Notes" onclick="changeBestsellers('bs4');">
+					</td>					
+					<td colspan="2" rowspan="5">
+						<div class="ytotal">
+							<div class="yellowbox" id="mainbox4yb"></div>
+							<div class="big" id="mainbox4">
+								<div class="temp">
+									<img class="mainbox" id="mainbox4img" th:src="@{/img/main/bestseller/main_bundle.JPG}" width="200px" />
+									<div class="main_image_text" id="mainbox4txt" style="height: 500px;">Bundles</div>
+									<input type="button" class="mainbox_shop_btn" value="Shop now"></input>
+								</div>
+							</div>
+						</div>
+					</td>					
+				</tr>
+				<tr>
+					<td rowspan="2" colspan="2">
+						<div class="bestcenter" id="bs1" th:object="${bestseller1.get(0)}">
+							<div class="bestseller" id="bs1"><img class="bsimg" id="bs1_img" th:src="*{imgsrc}" /> </div>
+							<div class="bestseller bestsellertxt" id="bs1_2">
+								<div class="besttext" id="bs1_txt" th:text="*{name}"></div>
+								<div class="bestprice" id="bs1_price" th:text="*{price}"></div>
+							</div>
+						</div>
+					</td>
+					<td rowspan="2" colspan="2">
+						<div class="bestcenter" id="bs2" th:object="${bestseller1.get(1)}">
+							<div class="bestseller" id="bs2_1"><img class="bsimg" id="bs2_img" th:src="*{imgsrc}" /> </div>
+							<div class="bestseller bestsellertxt" id="bs2_1">
+								<div class="besttext" id="bs2_txt" th:text="*{name}"></div>
+								<div class="bestprice" id="bs2_price" th:text="*{price}"></div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+
+				</tr>
+				<tr>
+					<td rowspan="2" colspan="2">
+						<div class="bestcenter" id="bs3" th:object="${bestseller1.get(2)}">
+							<div class="bestseller" id="bs3_1"><img class="bsimg" id="bs3_img" th:src="*{imgsrc}" /> </div>
+							<div class="bestseller bestsellertxt" id="bs3_2">
+								<div class="besttext" id="bs3_txt" th:text="*{name}"></div>
+								<div class="bestprice" id="bs3_price" th:text="*{price}"></div>
+							</div>
+						</div>
+					</td>
+					<td rowspan="2" colspan="2">
+						<div class="bestcenter" id="bs4" th:object="${bestseller1.get(3)}">
+							<div class="bestseller" id="bs4_1"><img class="bsimg" id="bs4_img" th:src="*{imgsrc}" /> </div>
+							<div class="bestseller bestsellertxt" id="bs4_2">
+								<div class="besttext" id="bs4_txt" th:text="*{name}"></div>
+								<div class="bestprice" id="bs4_price" th:text="*{price}"></div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				</tr>
+				<tr>
+			</table>
+		</div>
+
+		<br>
+		<br>
+		<br>
+		<div class="maincontent">
+			<div style="font-weight: bold;">Shop By Categories</div>
+		</div>
+		<br>
+		<div class="maincontent">
+			<table>
+				<colgroup>
+					<col width="16%" />
+					<col width="16%" />
+					<col width="16%" />
+					<col width="16%" />
+					<col width="16%" />
+					<col width="16%" />
+				</colgroup>
+				<tr>
+					<td colspan="6"><img class="bsimg" th:src="@{/img/main/Categories.JPG}" width="1200px" /></td>
+				</tr>
+				<tr>
+					<td>Bundel Deals</td>
+					<td>Stickers</td>
+					<td>Notepads&<br>Padfolios</td>
+					<td>Clipboards</td>
+					<td>Sorority Inspired</td>
+					<td>I'M Every Woman<br>Collection</td>
+				</tr>
+			</table>
+
+		</div>
+		<br>
+		<br>
+
+		<div class="newsletter">
+			<div class="lettertext">
+				<div class="lettertextcenter">
+					We Are So Much More Than<br>Stationery
+					<p style="font-size: 18px;font-family: 롯데마트잠실체3;">AVERAGE STORE RATING ⭐4.9⭐ 348 CUSTOMER REVIEWS
+					</p>
+				</div>
+			</div>
+			<div class="letterimg">
+				<div class="letterimgcenter">
+					<img class="bsimg" th:src="@{/img/main/mainbox4.JPG}" width="300px"
+						style="transform:rotate(335deg);" />
+				</div>
+			</div>
+			<div class="newslettersend">
+				<table width="50%">
+					<colgroup>
+						<col width="5%"/>
+						<col width="35%"/>
+						<col width="20%"/>
+						<col width="10%"/>
+					</colgroup>
+					<tr>
+						<td><img class="bsimg" th:src="@{/img/main/mail.JPG}" width="70px" /></td>
+						<td style="text-align:left"><b>Sign Up To Our Newsletter</b>
+							<div style="font-size: 12px;">Subscribe to receive updates, access to exclusive deals..</div>
+						</td>
+						<td><input type="text" style="width: 300px; height: 30px;" /></td>
+						<td><input type="button" class="subscribebutton" value="Subscribe" /></td>
+					</tr>
+
+				</table>
+
+
+			</div>
+		</div>
+
+	</div>
+	
+	<br><br><br>
+	<nav th:replace="~{footer :: FooterFragment}"></nav>
+</body>
+
+<script src="https: //code.jquery.com/jquery-1.11.3.js" type="text/javascript"></script> 
+<script th:inline="javascript">
+	// hover mainbox
+	function hoverparentevent(mainbox) {
+		let test = document.getElementById(mainbox);
+		let img = mainbox + "img";
+		let txt = mainbox + "txt";
+		let yb = mainbox + "yb";
+		
+		console.log(img);
+		test.addEventListener("mouseover", function (event) {
+			// highlight the mouseover target
+			document.getElementById(yb).style.transform = "scale(1.05)";
+			document.getElementById(yb).style.transition = "all 0.5s";
+			document.getElementById(img).style.filter = "brightness(100%)";
+
+		}, false);
+
+		test.addEventListener("mouseout", function (event) {
+			document.getElementById(yb).style.transform = "scale(1.0)";
+			document.getElementById(yb).style.transition = "all 0.5s";
+			document.getElementById(img).style.filter = "brightness(50%)";
+
+		}, false);
+	}
+
+	hoverparentevent('mainbox1');
+	hoverparentevent('mainbox2');
+	hoverparentevent('mainbox3');
+	hoverparentevent('mainbox4');	
+
+
+	function changeBestsellers(bsid){
+
+		if (bsid == 'bs1' ){	
+		   [# th:each="bs, num : ${bestseller1}"]
+				document.getElementById('bs[[${num.count}]]_img').src = [[${bs.imgsrc}]];
+				document.getElementById('bs[[${num.count}]]_txt').innerText = [[${bs.name}]];
+				document.getElementById('bs[[${num.count}]]_price').innerText = [[${bs.price}]];
+		   [/]
+		   if (4-[[${#lists.size(bestseller1)}]] > 0){
+				for(i=[[${#lists.size(bestseller1)}]]+1; i<5 ;i++){
+				document.getElementById('bs'+i+'_img').src = "/img/main/mail.JPG";
+				document.getElementById('bs'+i+'_txt').innerText = '';
+				document.getElementById('bs'+i+'_price').innerText = '';
+				}
+		   }
+		}else if (bsid == 'bs2'){
+		   [# th:each="bs, num : ${bestseller2}"]
+				document.getElementById('bs[[${num.count}]]_img').src = [[${bs.imgsrc}]];
+				document.getElementById('bs[[${num.count}]]_txt').innerText = [[${bs.name}]];
+				document.getElementById('bs[[${num.count}]]_price').innerText = [[${bs.price}]];
+		   [/]
+		   if (4-[[${#lists.size(bestseller2)}]] > 0){
+				for(i=[[${#lists.size(bestseller2)}]]+1; i<5; i++){
+				document.getElementById('bs'+i+'_img').src = "/img/main/mail.JPG";
+				document.getElementById('bs'+i+'_txt').innerText = '';
+				document.getElementById('bs'+i+'_price').innerText = '';
+				}
+		   }
+		}else if (bsid == 'bs3' ){
+			   [# th:each="bs, num : ${bestseller3}"]
+				document.getElementById('bs[[${num.count}]]_img').src = [[${bs.imgsrc}]];
+				document.getElementById('bs[[${num.count}]]_txt').innerText = [[${bs.name}]];
+				document.getElementById('bs[[${num.count}]]_price').innerText = [[${bs.price}]];
+		  		[/]
+		  if (4-[[${#lists.size(bestseller3)}]] > 0){
+				for(i=[[${#lists.size(bestseller3)}]]+1; i<5; i++){
+				document.getElementById('bs'+i+'_img').src = "/img/main/mail.JPG";
+				document.getElementById('bs'+i+'_txt').innerText = '';
+				document.getElementById('bs'+i+'_price').innerText = '';
+				}  
+			}
+		}else if (bsid == 'bs4' ){
+			   [# th:each="bs, num : ${bestseller4}"]
+					document.getElementById('bs[[${num.count}]]_img').src = [[${bs.imgsrc}]];
+					document.getElementById('bs[[${num.count}]]_txt').innerText = [[${bs.name}]];
+					document.getElementById('bs[[${num.count}]]_price').innerText = [[${bs.price}]];
+			   [/]
+		  if (4-[[${#lists.size(bestseller4)}]] > 0){
+				for(i=[[${#lists.size(bestseller4)}]]+1; i<5; i++){
+				document.getElementById('bs'+i+'_img').src = "/img/main/mail.JPG";
+				document.getElementById('bs'+i+'_txt').innerText = '';
+				document.getElementById('bs'+i+'_price').innerText = '';
+				} 
+		   }
+		
+					
+		}
+	}
+
+
+
+
+</script>
+
+</html>
+
+
+<!--<img th:src="@{/img/mainPhotoBottom.png}" class="mainbg bottom" alt="mainbg">-->
+
+<!--https://gurtn.tistory.com/182    배경이미지 참고 링크(배경고정스크롤)-->
+<!--https://devbirdfeet.tistory.com/231  이미지 자르기-->
+<!--https://stackoverflow.com/questions/4502633/how-to-affect-other-elements-when-one-element-is-hovered  csshover 예제-->
+
+

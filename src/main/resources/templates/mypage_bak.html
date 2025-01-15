@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" th:href="@{/jystyle.css}">
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>	
+	<title>MyPage | COPPER & BRASS</title>
+</head>
+
+<body>
+	<nav th:replace="~{header :: navbarFragment}"></nav>
+	<div class="total">
+		<div class=" colorheader" >
+		My Page
+		</div>
+	</div>
+<br><br>
+	<div class="total">
+		<div class="maincontent">
+			구매내역
+		</div>
+	</div>
+	<br>
+	
+	<!--<div th:if="${#lists.isEmpty(mypageList)}" >-->
+	<div class="total" th:if="${#lists.isEmpty(mypageList)}" >
+		<div class="maincontent">
+			구매 내역이 존재하지 않습니다.
+		</div>
+	</div>
+	
+	<table>
+		<tr>
+			<td>주문번호</td>
+			<td>주문날짜</td>
+			<td>총가격</td>
+			<td>현재상태</td>
+		</tr>
+		<tr th:each="firstStock : ${mypageList}"  style="cursor: pointer;"  th:onClick="window.location='/copperbrass/mypage_details?id=1'">
+			<td >
+				<div th:text="${firstStock.orderid}" th:onClick="view([[${firstStock.orderid}]])" style="cursor: pointer;"></div>
+			</td>
+			<td>
+				<div th:text="${#temporals.format(firstStock.orderdatetime, 'yyyy.MM.dd HH:mm:ss')}"></div>
+			</td>
+			<td>
+				$<span th:text="${firstStock.totalprice}"></span>
+			</td>									
+			<td>
+				<div th:if="${firstStock.deposit}=='0'">입금대기</div>
+				<div th:if="${firstStock.deposit}=='1'">입금확인</div>
+				<div th:if="${firstStock.deposit}=='2'">출고준비</div>
+				<div th:if="${firstStock.deposit}=='3'">배송중</div>
+				<div th:if="${firstStock.deposit}=='9'">배송완료</div>
+			</td>
+		</tr>
+	</table>
+
+
+	
+	<br><br><br><br>
+
+	<br><br><br>
+	<nav th:replace="~{footer :: FooterFragment}"></nav>	
+</body>
+
+<script src="https: //code.jquery.com/jquery-1.11.3.js" type="text/javascript"></script> 
+<script th:inline="javascript">
+	function view(id){
+      var newForm = document.createElement("form");
+      newForm.setAttribute("method", "POST");
+      newForm.setAttribute("action", "/copperbrass/mypage_details");
+      
+      
+      var newInput = document.createElement("input");
+      newInput.setAttribute("type", "text");
+      newInput.setAttribute("name", "newInputId");
+      newInput.setAttribute("id", "newInputId");
+      newInput.setAttribute("value", id);   
+      
+// csrf 처리
+      var newInput2 = document.createElement("input");
+      newInput2.setAttribute("type", "hidden");
+      newInput2.setAttribute("name", [[${_csrf.parameterName}]]);
+      newInput2.setAttribute("value", [[${_csrf.token}]]);
+      
+      // input을 form의 자식태그로 붙이기
+      newForm.appendChild(newInput);
+      newForm.appendChild(newInput2);
+      
+      // form을 body태그의 자식태그로 붙이기
+      document.body.appendChild(newForm);
+      newForm.submit();      
+      
+	}
+</script>
+
+</html>
+
+
+
