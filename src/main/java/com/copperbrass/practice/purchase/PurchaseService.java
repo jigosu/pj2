@@ -38,11 +38,6 @@ public class PurchaseService {
 		this.purchaseRepository.save(p);
 	}
 	
-//	public List<purchase> findDeposit1status(SiteUser user){
-////		return this.purchaseRepository.findDeposit1status(user);
-//		return purchaseRepository.findByUser(user);
-//	}
-	
 	public List<purchase> findPagedPurchases(SiteUser user, int page) {
 	    int pageSize = 2; // 페이지 당 항목 수
 	    Pageable pageable = PageRequest.of(page, pageSize, Sort.by(Sort.Direction.DESC, "id"));
@@ -56,7 +51,6 @@ public class PurchaseService {
 	
 	}	
 		
-	
 	
 	public Optional<purchase> getPurchasedetails(Integer id){
 		return this.purchaseRepository.findById(id);
@@ -87,5 +81,9 @@ public class PurchaseService {
             .map(MypagePurchaseMapper::toDTO) // Mapper를 사용하여 변환
             .collect(Collectors.toList());
     }	    
+    
+    public void updateDeposit(String orderId, String deposit) {
+    	purchaseRepository.updateDepositByOrderid(orderId,deposit);
+    }
 
 }

@@ -425,6 +425,8 @@ public class PurchaseController {
             return;
         }
         
+        System.out.println(orderId);
+        
         // purchaseId를 Integer로 변환
         Integer purchaseId;
         try {
@@ -433,10 +435,11 @@ public class PurchaseController {
             System.out.println("Invalid purchaseId format: " + purchaseIdString);
             return;
         }        
-        
+        String deposit = "9";
         purchase purchase = purchaseService.getPurchaseidByOrderid(orderId);
-        
-        purchasedetailService.updateStatusByPurchaseId(orderId);
+        System.out.println(purchase.getId());
+        purchasedetailService.updateStatusByPurchaseId(purchase.getId());
+        purchaseService.updateDeposit(orderId,deposit);
             
         
     }    

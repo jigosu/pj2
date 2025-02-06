@@ -33,7 +33,7 @@
 			total
 			<span id="subtotalPrice" class="subtotalPrice" >$</span>
 			<br><br>
-			<button class="blueBtn" id="viewCart" onclick="send();" >Checkout</button>
+			<button class="blueBtn" id="viewCart" onclick="send(event);" >Checkout</button>
 			<br>
 
 		</div>
@@ -51,18 +51,28 @@
 
 	const modalbg = document.getElementById('modalContainer');
 	var sendList = [];
-	//  const cookies = document.cookie.split('; '); // 배열로 반환
-	//  console.log(cookies);	
-	function send(){
-		var frm = document.board_form;
-		
-		frm.name_list.value = sendList;
-		
-		allDelCookies ();
-		
-		frm.submit();
+	
+	function send(event){
+	    if (event) {
+	        event.preventDefault(); // 기본 동작(폼 제출) 방지
+	    }
+			var frm = document.board_form;
+			const userRoles = /*[[${#authentication.authorities}]]*/ [];
+		    const isAdmin = userRoles.some(role => role.authority === 'ROLE_ADMIN');
+		    const isUser = userRoles.some(role => role.authority === 'ROLE_USER');
+			console.log(isAdmin);
+			console.log(isUser);
+	
+			if(!(isAdmin || isUser)){
+				alert("You can purchase after logging in.");
+			}else if(isAdmin){
+				alert("Purchases are not possible with an administrator account.")
+			}else{
+				frm.name_list.value = sendList;
+				allDelCookies ();
+				frm.submit();
+			}
 	}
-
   	
 	function setCookie(cookie_name, path, quantity, price, days) {
 	  var exdate = new Date();
@@ -108,7 +118,8 @@
 	
 	  // 반목문 순회하면서 쿠키 전체 삭제
 	  if (!document.cookie) {
-	    alert('삭제할 쿠키가 없습니다.');
+		  return ;
+	    //alert('삭제할 쿠키가 없습니다.');
 	  } else {
 	    for (i = 0; i < cookies.length; i++) {
 	      document.cookie = cookies[i].split('=')[0] + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;path=/;';
@@ -175,12 +186,6 @@
 getCookies();
 console.log("쿠키값 : "+document.cookie);
 
-	/*모달창 닫기 - 실패
-	$(document).mouseup(function (e){
-		if($(".addtocart").has(e.target).length === 0){
-			$(".cart_modal").hide();
-		}
-	});*/
 
 
 	$(document).on('click', '[id^=DelItemId]', function(event) {

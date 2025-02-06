@@ -75,6 +75,11 @@ const header = $("meta[name='_csrf_header']").attr("content");
 			let orderid = "[[${targetPurchase.orderid}]]";
 			let now_status = "[[${refundhistory != null && refundhistory.status != null ? refundhistory.status : 'No Status'}]]";
 
+			console.log(now_status);
+			if (now_status == 'No Status'){
+				alert("There are no items to refund.");
+				return;
+			}
 			if(now_status == 1 && status_value == 1){
 				alert("You cannot cancel the first thing.");
 				return;

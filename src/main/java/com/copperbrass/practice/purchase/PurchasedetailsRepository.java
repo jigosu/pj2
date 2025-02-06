@@ -18,8 +18,9 @@ public interface PurchasedetailsRepository extends JpaRepository<purchasedetails
 	
 	@Modifying
 	@Transactional
-	@Query("UPDATE purchasedetails p SET p.status = 'Confirmed' WHERE p.purchase.id = :purchaseId AND p.status <> 'Refunded'")
-	int updateStatusToCByPurchaseIdAndStatusNotRefunded(@Param("purchaseId") String purchaseId);
+	@Query("UPDATE purchasedetails p SET p.status = 'Confirmed' WHERE p.purchase.id = :purchaseId AND (p.status <> 'Refunded' OR p.status IS NULL)")
+	void updateStatusToCByPurchaseIdAndStatusNotRefunded(@Param("purchaseId") Integer purchaseId);
+
 
 
 }

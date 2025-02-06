@@ -3,6 +3,7 @@ package com.copperbrass.practice.purchase;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 
@@ -33,8 +34,8 @@ public class PurchasedetailService {
     public List<purchasedetails> getDetailsByPurchaseIdAndIds(Integer purchaseId, List<Integer> ids) {
         return purchasedetailsRepository.findByPurchaseIdAndIdIn(purchaseId, ids);
     }
-	   
-    public void updateStatusByPurchaseId(String orderId) {
+	 
+    public void updateStatusByPurchaseId(Integer orderId) {
         purchasedetailsRepository.updateStatusToCByPurchaseIdAndStatusNotRefunded(orderId);
     }
 
